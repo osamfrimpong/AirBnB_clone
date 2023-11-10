@@ -2,9 +2,11 @@
 
 """ This is the main file/class that serves as the base for all other models """
 
-import models
+
 from datetime import datetime
 import uuid
+
+import models
 
 class BaseModel:
     """ Definition of BaseModel class"""
@@ -40,4 +42,4 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
-        """save to file """
+        models.storage.save()
