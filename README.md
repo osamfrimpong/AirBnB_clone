@@ -28,13 +28,13 @@ update - Updates an instance based on the class name and id by adding or updatin
 models/ directory contains classes used for this project: base_model.py - The BaseModel class from which future classes will be derived
 
 ## Testing
-Unittests for the AirBnB project are defined in the tests folder. To run the entire test suite simultaneously, execute the following command:
+Unittests for the AirBnB project are outlined in the tests folder. To run the entire test suite simultaneously, execute the following command:
 
 ```
 $ python3 unittest -m discover tests
 ```
 
-Alternatively, you can specify a single test file to run at a time:
+You can also specify a single test file to run at a time:
 
 ```
 $ python3 unittest -m tests/test_console.py
