@@ -1,12 +1,19 @@
 #!/usr/bin/python3
 import json
 
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+
 class FileStorage:
 
     __file_path = "data_store.json"
     __objects = {}
 
-    list_of_classes = {}
+    list_of_classes = {'Amenity':Amenity, 'City': City, 'Place': Place, 'Review': Review, 'State':State, 'User':User}
 
     def all(self):
         return self.__objects
