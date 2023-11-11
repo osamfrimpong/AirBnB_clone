@@ -77,7 +77,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, command_args):
         """Prints all string representation of all instances in the console"""
-        pass
+        stored_objects_in_database = storage.all()
+        if command_args == "":
+            print([f"{str(value)}" for key, value in stored_objects_in_database.items()])
+            return
+        elif command_args.split()[0] not in self.__allowed_classes.keys():
+            print("** class doesn't exist **")
+            return
+        else:
+            print([f"{str(value)}" for key, value in stored_objects_in_database.items() if type(value).__name__ == command_args.split()[0]])
+            return
 
     def do_update(self, command_args):
         """Update an instance based on class name"""
