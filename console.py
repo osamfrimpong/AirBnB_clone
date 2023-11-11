@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import cmd
+from models import storage
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -55,15 +56,50 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, command_args):
         """Prints the string representation of object in console"""
-        pass
+        
+        if not self.initial_class_name_checks(command_args, instance_id_check=True):
+            return
+        
+        else:
+            command_args_list = command_args.split()
+            key_to_find = f"{command_args_list[0]}.{command_args_list[1]}"
+            stored_objects_in_database = storage.all()
+            find_item = stored_objects_in_database.get(key_to_find, None)
+            if find_item is not None:
+                print(find_item)
+            else:
+                print("** no instance found **")
+                return
 
     def do_destroy(self, command_args):
         """Handle deletion of object"""
-        pass
+        if not self.initial_class_name_checks(command_args, instance_id_check=True):
+            return
+        
+        else:
+            command_args_list = command_args.split()
+            key_to_find = f"{command_args_list[0]}.{command_args_list[1]}"
+            stored_objects_in_database = storage.all()
+            find_item = stored_objects_in_database.get(key_to_find, None)
+            if find_item is not None:
+                del stored_objects_in_database[key_to_find]
+                storage.save()
+            else:
+                print("** no instance found **")
+                return
 
     def do_all(self, command_args):
         """Prints all string representation of all instances in the console"""
-        pass
+        stored_objects_in_database = storage.all()
+        if command_args == "":
+            print([f"{str(value)}" for key, value in stored_objects_in_database.items()])
+            return
+        elif command_args.split()[0] not in self.__allowed_classes.keys():
+            print("** class doesn't exist **")
+            return
+        else:
+            print([f"{str(value)}" for key, value in stored_objects_in_database.items() if key.split('.')[0] == command_args.split()[0]])
+            return
 
     def do_update(self, command_args):
         """Update an instance based on class name"""
