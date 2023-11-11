@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import cmd
+from models import storage
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -55,7 +56,20 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, command_args):
         """Prints the string representation of object in console"""
-        pass
+        
+        if not self.initial_class_name_checks(command_args, instance_id_check=True):
+            return
+        
+        else:
+            command_args_list = command_args.split()
+            key_to_find = f"{command_args_list[0]}.{command_args_list[1]}"
+            stored_objects_in_database = storage.all()
+            find_item = stored_objects_in_database.get(key_to_find, None)
+            if find_item is not None:
+                print(find_item)
+            else:
+                print("** no instance found **")
+                return
 
     def do_destroy(self, command_args):
         """Handle deletion of object"""
