@@ -30,13 +30,22 @@ class FileStorage:
 
     def reload(self):
         try:
-            with open(self.__file_path, 'r') as database_file:
-                json_string = json.load(database_file)
-                for object_content in json_string.values():
-                    name_of_object_class = object_content["__class__"]
-                    object_class = self.list_of_classes[name_of_object_class]
+            with open(self.__file_path, 'r', encoding="utf-8") as database_file:
+                
+                json_string = None
+                
+                try:
+                    json_string = json.load(database_file)
+                except json.JSONDecodeError:
+                    pass
 
-                    self.new(object_class(**object_content))
+                if json_string is not None:
+                    for object_content in json_string.values():
+                        name_of_object_class = object_content["__class__"]
+                        object_class = self.list_of_classes[name_of_object_class]
+                        self.new(object_class(**object_content))
+                else:
+                    return
 
         except FileNotFoundError:
             pass

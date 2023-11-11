@@ -5,7 +5,6 @@
 
 from datetime import datetime
 import uuid
-
 import models
 
 class BaseModel:
@@ -24,9 +23,10 @@ class BaseModel:
                     if key != "__class__":
                         self.__dict__[key] = value
         else:
-            self.id = uuid.uuid4().__str__
+            self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self) -> str:
         name_of_class = self.__class__.__name__
