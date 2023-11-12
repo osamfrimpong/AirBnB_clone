@@ -28,4 +28,3 @@ class TestUser(unittest.TestCase):
         my_city = City()
         name = getattr(my_city, "state_id")
         self.assertIsInstance(name, str)
-

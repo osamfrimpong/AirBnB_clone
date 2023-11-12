@@ -21,4 +21,3 @@ class TestState(unittest.TestCase):
         raw_state = State()
         name = getattr(raw_state, "name")
         self.assertIsInstance(name, str)
-

@@ -12,7 +12,6 @@ from models.amenity import Amenity
 from models.base_model import BaseModel
 
 
-
 class TestAmenity(unittest.TestCase):
     def test_Amenity_inheritence(self):
         new_amenity = Amenity()
@@ -26,4 +25,3 @@ class TestAmenity(unittest.TestCase):
         new_amenity = Amenity()
         name_value = getattr(new_amenity, "name")
         self.assertIsInstance(name_value, str)
-        
