@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import json
-
+import os
+from models.base_model import BaseModel
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -31,9 +32,9 @@ class FileStorage:
     def reload(self):
         try:
             with open(self.__file_path, 'r', encoding="utf-8") as database_file:
-                
+
                 json_string = None
-                
+
                 try:
                     json_string = json.load(database_file)
                 except json.JSONDecodeError:

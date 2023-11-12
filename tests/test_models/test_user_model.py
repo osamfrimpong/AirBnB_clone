@@ -6,7 +6,8 @@ import unittest
 from models.base_model import BaseModel
 from models.user import User
 from io import StringIO
-
+import sys
+import datetime
 
 class TestUser(unittest.TestCase):
 
