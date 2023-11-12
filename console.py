@@ -1,5 +1,7 @@
 #!/usr/bin/python3
+import ast
 import cmd
+import json
 import re
 from shlex import split
 from models import storage
@@ -20,21 +22,33 @@ class HBNBCommand(cmd.Cmd):
     def initial_class_name_checks(self, command_args, instance_id_check=False, is_update=False):
         """Validation checks on inputted commands.
         """
+        contains_dict = False
+        if len(re.findall(r"{.*}", command_args)) == 1:
+            contains_dict = True
+            splitted_command_args = command_args.split(maxsplit=2)
+        else:
+            splitted_command_args = command_args.split() 
+
         if command_args == "":
             print("** class name missing **")
             return False
-        if command_args.split()[0] not in self.__allowed_classes.keys():
+        if splitted_command_args[0] not in self.__allowed_classes.keys():
             print("** class doesn't exist **")
             return False
-        if len(command_args.split()) < 2 and instance_id_check:
+        if len(splitted_command_args) < 2 and instance_id_check:
             print("** instance id missing **")
             return False
         
-        if is_update and len(command_args.split()) == 2:
+        if is_update and not contains_dict and len(splitted_command_args) == 2:
             print("** attribute name missing **")
             return False
-        if is_update and len(command_args.split()) == 3:
+        
+        if is_update and not contains_dict and len(splitted_command_args) == 3:
             print("** value missing **")
+            return False
+        
+        if is_update and contains_dict and len(splitted_command_args) < 3:
+            print("** invalid value **")
             return False
         return True
     # Helper Functions end
@@ -78,13 +92,17 @@ class HBNBCommand(cmd.Cmd):
                 elif found_list[1] == "count":
                     self.do_count(found_list[0])
                 else:
+                    
                     """for update"""
-                    if len(found_list) == 5:
-                        self.do_update(f"{found_list[0]} {found_list[2]} {found_list[3]} {found_list[4]}")
+                    class_name = found_list[0]
+                    content = found_list[2].split(", ") if len(re.findall(r"{.*}", found_list[2])) == 0 else found_list[2].split(", ",maxsplit=1) 
+                    if len(content) == 3:
+                        self.do_update(f"{class_name} {content[0]} {content[1]} {content[2]}")
                     else:
                         """
                         Update with dict
                         """
+                        self.do_update(f"{class_name} {content[0]} {content[1]}")
             else:
                  super().default(command_args)
         else:
@@ -152,7 +170,7 @@ class HBNBCommand(cmd.Cmd):
             return
         
         else:
-            command_args_list = split(command_args)
+            command_args_list = split(command_args) if len(re.findall(r"{.*}", command_args)) == 0 else command_args.split(maxsplit=2)
             key_to_find = f"{command_args_list[0]}.{command_args_list[1]}"
             stored_objects_in_database = storage.all()
             found_item = stored_objects_in_database.get(key_to_find, None)
@@ -162,8 +180,13 @@ class HBNBCommand(cmd.Cmd):
                     if command_args_list[2] in found_item.__class__.__dict__.keys():
                         type_of_variable = type(found_item.__class__.__dict__[command_args_list[2]])
                         found_item.__dict__[command_args_list[2]] = type_of_variable(command_args_list[3])
-                elif len(command_args_list) > 4:
-                    pass
+                elif len(command_args_list) == 3:
+                    value_as_dict = ast.literal_eval(command_args_list[2])
+                    
+                    for index, value in value_as_dict.items():
+                        if index in found_item.__class__.__dict__.keys():
+                            type_of_variable = type(found_item.__class__.__dict__[index])
+                            found_item.__dict__[index] = type_of_variable(value)
                 storage.save()
 
             else:
