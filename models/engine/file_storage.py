@@ -14,7 +14,7 @@ class FileStorage:
     __file_path = "data_store.json"
     __objects = {}
 
-    list_of_classes = {'Amenity':Amenity, 'City': City, 'Place': Place, 'Review': Review, 'State':State, 'User':User}
+    list_of_classes = {'Amenity':Amenity, 'City': City, 'Place': Place, 'Review': Review, 'State':State, 'User':User, 'BaseModel': BaseModel}
 
     def all(self):
         return self.__objects
