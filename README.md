@@ -40,3 +40,4 @@ You can also specify a single test file to run at a time:
 $ python3 unittest -m tests/test_console.py
 ```
 
+## AUTHORS
