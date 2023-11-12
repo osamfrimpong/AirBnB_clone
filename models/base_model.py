@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
-""" This is the main file/class that serves as the base for all other models """
+""" 
+This is the main file/class that serves as the base for all other models 
+"""
 
 
 from datetime import datetime

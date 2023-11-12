@@ -8,4 +8,3 @@ class Amenity(BaseModel):
     The public class attribute ill inherit basemodule
     """
     name = ""
-

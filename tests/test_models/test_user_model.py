@@ -9,6 +9,7 @@ from io import StringIO
 import sys
 import datetime
 
+
 class TestUser(unittest.TestCase):
 
     def test_User_inheritance(self):
@@ -43,4 +44,3 @@ class TestUser(unittest.TestCase):
         first_user = User()
         name = getattr(first_user, "password")
         self.assertIsInstance(name, str)
-

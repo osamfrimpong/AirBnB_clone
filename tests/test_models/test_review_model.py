@@ -28,4 +28,3 @@ class TestReview(unittest.TestCase):
         self.assertIsInstance(place_id, str)
         self.assertIsInstance(user_id, str)
         self.assertIsInstance(text, str)
-
