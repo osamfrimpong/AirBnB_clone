@@ -7,6 +7,7 @@ import re
 from shlex import split
 from models import storage
 from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -16,7 +17,7 @@ from models.user import User
 class HBNBCommand(cmd.Cmd):
     """Class definition for AirBnB console"""
     prompt = "(hbnb) "
-    __allowed_classes = {'Amenity':Amenity, 'City': City, 'Place': Place, 'Review': Review, 'State':State, 'User':User}
+    __allowed_classes = {'Amenity':Amenity, 'City': City, 'Place': Place, 'Review': Review, 'State':State, 'User':User, 'BaseModel':BaseModel}
 
 
     # Helper Functions
