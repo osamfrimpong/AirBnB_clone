@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Defines the console to perform operations"""
 import ast
 import cmd
 import json
