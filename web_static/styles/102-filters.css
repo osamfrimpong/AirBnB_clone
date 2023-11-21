@@ -32,6 +32,12 @@ button:hover {
     border-right: 1px solid #dddddd;
 }
 
+.filters .locations::after, .filters .amenities::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
 h2 {
     font-size: 16px;
     margin: 5px;
@@ -71,4 +77,18 @@ li {
 
 .filters .amenities:hover .popover {
     display: block;
+}
+
+@media screen and (max-width: 530px) {
+    .filters .locations, .filters .amenities {
+        width: 50%;
+    }
+
+    button {
+        float: none;
+        width: 95%;
+    }
+    .places {
+        margin-top: 4rem;
+    }
 }
